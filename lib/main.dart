@@ -14,7 +14,11 @@ Future<void> main() async {
   Hive.registerAdapter(LocalSongsAdapter());
   await Hive.openBox<List>(boxname);
   final box = MusicBox.getInstance();
-
+  List<dynamic> favKeys = box.keys.toList();
+  if (!favKeys.contains("favourites")) {
+    List<dynamic> likedSongs = [];
+    await box.put("favourites", likedSongs);
+  }
   runApp(const MyApp());
 }
 
@@ -28,7 +32,7 @@ class MyApp extends StatelessWidget {
       themeMode: m,
       theme: MyThemes.lightTheme,
       darkTheme: MyThemes.darkTheme,
-      title: 'Music',
+      title: 'Muzify',
       home: const SplashScreen(),
     );
   }

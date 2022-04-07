@@ -7,6 +7,7 @@ import 'package:music/screens/library.dart';
 import 'package:music/screens/musiclist.dart';
 import 'package:music/screens/nowplaying.dart';
 import 'package:on_audio_query/on_audio_query.dart';
+import 'package:swipe_to/swipe_to.dart';
 
 import '../main.dart';
 import 'search.dart';
@@ -51,7 +52,9 @@ class _HomePageState extends State<HomePage> {
       MusicList(
         fullSongs: widget.allSong,
       ),
-      const SearchScreen(),
+      SearchScreen(
+        fullSongs: const [],
+      ),
       const Library(),
     ];
     return Scaffold(
@@ -98,24 +101,33 @@ class _HomePageState extends State<HomePage> {
                         left: 12,
                         top: 12,
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            myAudio.metas.title!,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.w500),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            myAudio.metas.artist!,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: GoogleFonts.poppins(fontSize: 12),
-                          ),
-                        ],
+                      child: SwipeTo(
+                        iconSize: 0,
+                        onLeftSwipe: () {
+                          assetAudioPlayer.next();
+                        },
+                        onRightSwipe: () {
+                          assetAudioPlayer.previous();
+                        },
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              myAudio.metas.title!,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w500),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              myAudio.metas.artist!,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: GoogleFonts.poppins(fontSize: 12),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -145,11 +157,13 @@ class _HomePageState extends State<HomePage> {
                             );
                           }),
                       const SizedBox(width: 10),
-                      IconButton(
-                        onPressed: () {
-                          assetAudioPlayer.next();
-                        },
-                        icon: const Icon(FontAwesomeIcons.stepForward),
+                      GestureDetector(
+                        child: IconButton(
+                          onPressed: () {
+                            assetAudioPlayer.next();
+                          },
+                          icon: const Icon(FontAwesomeIcons.stepForward),
+                        ),
                       ),
                       const SizedBox(width: 15),
                     ],

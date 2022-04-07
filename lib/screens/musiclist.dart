@@ -22,6 +22,8 @@ class MusicList extends StatefulWidget {
 
 class _MusicListState extends State<MusicList> {
   List? dbSongs = [];
+  List<dynamic>? favorites = [];
+  List<dynamic>? likedSongs = [];
 
   final box = MusicBox.getInstance();
   final AssetsAudioPlayer player = AssetsAudioPlayer.withId("0");
@@ -37,7 +39,7 @@ class _MusicListState extends State<MusicList> {
     dbSongs = box.get("musics");
   }
 
-  List<SongModel> songs = [];
+  // List<SongModel> songs = [];
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +118,7 @@ class _MusicListState extends State<MusicList> {
                             style: GoogleFonts.poppins(fontSize: 14),
                           ),
                           trailing: PopupMenuButton(
-                            itemBuilder: (context) => [
+                            itemBuilder: (BuildContext context) => [
                               PopupMenuItem(
                                 value: '0',
                                 child: Text(
@@ -124,12 +126,63 @@ class _MusicListState extends State<MusicList> {
                                   style: GoogleFonts.poppins(fontSize: 15),
                                 ),
                               ),
-                              PopupMenuItem(
-                                child: Text(
-                                  'Add to Favourites',
-                                  style: GoogleFonts.poppins(fontSize: 15),
-                                ),
-                              ),
+                              likedSongs!
+                                      .where((element) =>
+                                          element.id.toString() ==
+                                          dbSongs![index].id.toString())
+                                      .isEmpty
+                                  ? PopupMenuItem(
+                                      child: Text(
+                                        'Add to Favourites',
+                                        style:
+                                            GoogleFonts.poppins(fontSize: 15),
+                                      ),
+                                      onTap: () async {
+                                        final songs = box.get("musics")
+                                            as List<LocalSongs>;
+                                        final temp = songs.firstWhere(
+                                            (element) =>
+                                                element.id.toString() ==
+                                                widget.fullSongs[index].metas.id
+                                                    .toString());
+                                        favorites = likedSongs;
+                                        favorites?.add(temp);
+                                        box.put("favourites", favorites!);
+
+                                        // Navigator.of(context).pop();
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          const SnackBar(
+                                            content:
+                                                Text('Added to Favourites'),
+                                          ),
+                                        );
+                                      },
+                                    )
+                                  : PopupMenuItem(
+                                      child: Text(
+                                        'Remove from Favourites',
+                                        style:
+                                            GoogleFonts.poppins(fontSize: 15),
+                                      ),
+                                      onTap: () async {
+                                        likedSongs?.removeWhere((elemet) =>
+                                            elemet.id.toString() ==
+                                            dbSongs![index].id.toString());
+                                        await box.put(
+                                            "favourites", likedSongs!);
+                                        setState(() {});
+
+                                        // Navigator.of(context).pop();
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          const SnackBar(
+                                            content:
+                                                Text('Removed From Favourites'),
+                                          ),
+                                        );
+                                      },
+                                    )
                             ],
                             onSelected: (value) {
                               if (value == '0') {
@@ -145,6 +198,7 @@ class _MusicListState extends State<MusicList> {
                                   ),
                                 );
                               }
+                              if (value == '1') {}
                             },
                           ),
                           leading: SizedBox(

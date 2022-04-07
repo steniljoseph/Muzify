@@ -22,11 +22,12 @@ class MusicPlayerScreen extends StatefulWidget {
 }
 
 class MusicPlayerScreenState extends State<MusicPlayerScreen> {
-  double minimumValue = 0, maximumValue = 0, currentValue = 0;
-  String currentTime = '', endTime = '';
+  // double minimumValue = 0, maximumValue = 0, currentValue = 0;
+  // String currentTime = '', endTime = '';
 
   bool isPlaying = false;
-  bool _fav = false;
+  bool isLooping = false;
+  // bool _fav = false;
   LocalSongs? music;
 
   final AssetsAudioPlayer player = AssetsAudioPlayer.withId("0");
@@ -35,9 +36,10 @@ class MusicPlayerScreenState extends State<MusicPlayerScreen> {
     return source.firstWhere((element) => element.path == fromPath);
   }
 
-  late TextEditingController controller;
+  // late TextEditingController controller;
   final box = MusicBox.getInstance();
   List<LocalSongs> dbSongs = [];
+  List<dynamic>? likedSongs = [];
 
   @override
   void initState() {
@@ -70,11 +72,11 @@ class MusicPlayerScreenState extends State<MusicPlayerScreen> {
           //   PopupMenuButton(
           //     itemBuilder: (context) => [
           //       PopupMenuItem(
-          //         value: '0',
-          //         child: Text(
-          //           'Add to Playlist',
-          //           style: GoogleFonts.poppins(fontSize: 15),
-          //         ),
+          // value: '0',
+          // child: Text(
+          //   'Add to Playlist',
+          //   style: GoogleFonts.poppins(fontSize: 15),
+          // ),
           //       ),
           //       PopupMenuItem(
           //         onTap: (() {}),
@@ -84,21 +86,21 @@ class MusicPlayerScreenState extends State<MusicPlayerScreen> {
           //         ),
           //       ),
           //     ],
-          //     // onSelected: (value) {
-          //     //   if (value == '0') {
-          //     //     showModalBottomSheet(
-          //     //       shape: const RoundedRectangleBorder(
-          //     //         borderRadius: BorderRadius.vertical(
-          //     //           top: Radius.circular(20),
-          //     //         ),
-          //     //       ),
-          //     //       context: context,
-          //     //       builder: (context) => AddtoPlayList(
-          //     //         song: widget.fullSongs.,
-          //     //       ),
-          //     //     );
-          //     //   }
-          //     // },
+          //     onSelected: (value) {
+          //       if (value == '0') {
+          //         showModalBottomSheet(
+          //           shape: const RoundedRectangleBorder(
+          //             borderRadius: BorderRadius.vertical(
+          //               top: Radius.circular(20),
+          //             ),
+          //           ),
+          //           context: context,
+          //           builder: (context) => AddtoPlayList(
+          //             song: widget.,
+          //           ),
+          //         );
+          //       }
+          //     },
           //   ),
           // ],
         ),
@@ -107,8 +109,11 @@ class MusicPlayerScreenState extends State<MusicPlayerScreen> {
             final myAudio =
                 find(widget.fullSongs, playing!.audio.assetAudioPath);
 
-            // final currentSong = dbSongs.firstWhere((element) =>
-            //     element.id.toString() == myAudio.metas.id.toString());
+            final currentSong = dbSongs.firstWhere((element) =>
+                element.id.toString() == myAudio.metas.id.toString());
+
+            likedSongs = box.get("favourites");
+
             return Container(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
@@ -147,13 +152,6 @@ class MusicPlayerScreenState extends State<MusicPlayerScreen> {
                           id: int.parse(myAudio.metas.id!),
                           type: ArtworkType.AUDIO,
                         ),
-
-                        // Image(
-                        //   image: const AssetImage('assets/images/parudeesa.jpg'),
-                        //   width: MediaQuery.of(context).size.width * 0.7,
-                        //   height: MediaQuery.of(context).size.width * 0.7,
-                        //   fit: BoxFit.cover,
-                        // ),
                       ),
                     ),
                   ),
@@ -179,57 +177,6 @@ class MusicPlayerScreenState extends State<MusicPlayerScreen> {
                     alignment: Alignment.topLeft,
                     margin: const EdgeInsets.only(left: 10, right: 10),
                     child: seekBar(context),
-                    // Row(
-                    //   children: [
-                    //     // Expanded(
-                    //     //   child: player.builderRealtimePlayingInfos(
-                    //     //     builder: (context, RealtimePlayingInfos? infos) {
-                    //     //       if (infos == null) {
-                    //     //         return const SizedBox();
-                    //     //       }
-                    //     //       return ProgressBar(
-                    //     //         timeLabelPadding: 8,
-                    //     //         progressBarColor: Colors.white,
-                    //     //         thumbColor: Colors.white,
-                    //     //         baseBarColor: Colors.grey,
-                    //     //         progress: infos.currentPosition,
-                    //     //         total: Duration(
-                    //     //             milliseconds: currentsong!.duration!),
-                    //     //         timeLabelTextStyle:
-                    //     //             const TextStyle(color: Colors.white),
-                    //     //         onSeek: (duration) {
-                    //     //           player.seek(duration);
-                    //     //         },
-                    //     //       );
-                    //     //     },
-                    //     //   ),
-                    //     //   //   child: StreamBuilder<Duration>(
-                    //     //   //     stream: player.currentPosition,
-                    //     //   //     builder: (context, snapshot) {
-                    //     //   //       return Slider(
-                    //     //   //         max: playing.audio.duration.inMilliseconds
-                    //     //   //             .toDouble(),
-                    //     //   //         value: snapshot.data == null
-                    //     //   //             ? 0
-                    //     //   //             : snapshot.data!.inMilliseconds.toDouble(),
-                    //     //   //         onChanged: (value) {
-                    //     //   //           player.seek(
-                    //     //   //             Duration(
-                    //     //   //               milliseconds: value.round(),
-                    //     //   //             ),
-                    //     //   //           );
-                    //     //   //         },
-                    //     //   //       );
-                    //     //   //     },
-                    //     //   //   ),
-                    //     // ),
-
-                    //     // Text(
-                    //     //   endTime,
-                    //     //   style: GoogleFonts.poppins(fontSize: 18),
-                    //     // ),
-                    //   ],
-                    // ),
                   ),
                   const SizedBox(
                     height: 40,
@@ -238,24 +185,55 @@ class MusicPlayerScreenState extends State<MusicPlayerScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          player.toggleShuffle();
+                        },
                         icon: const Icon(Icons.shuffle),
                       ),
-                      IconButton(
-                        onPressed: () {
-                          setState(
-                            () {
-                              _fav = !_fav;
-                            },
-                          );
-                        },
-                        icon:
-                            Icon(_fav ? Icons.favorite : Icons.favorite_border),
-                      ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.repeat),
-                      ),
+                      likedSongs!
+                              .where((element) =>
+                                  element.id.toString() ==
+                                  currentSong.id.toString())
+                              .isEmpty
+                          ? IconButton(
+                              onPressed: () async {
+                                likedSongs?.add(currentSong);
+                                box.put("favourites", likedSongs!);
+                                likedSongs = box.get("favourites");
+                                setState(() {});
+                              },
+                              icon: const Icon(Icons.favorite_border),
+                            )
+                          : IconButton(
+                              onPressed: () async {
+                                setState(() {
+                                  likedSongs?.removeWhere((elemet) =>
+                                      elemet.id.toString() ==
+                                      currentSong.id.toString());
+                                  box.put("favourites", likedSongs!);
+                                });
+                              },
+                              icon: const Icon(Icons.favorite),
+                            ),
+                      !isLooping
+                          ? IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  isLooping = true;
+                                  player.setLoopMode(LoopMode.single);
+                                });
+                              },
+                              icon: const Icon(Icons.repeat),
+                            )
+                          : IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  isLooping = false;
+                                  player.setLoopMode(LoopMode.playlist);
+                                });
+                              },
+                              icon: const Icon(Icons.repeat_one),
+                            ),
                     ],
                   ),
                   const SizedBox(

@@ -79,7 +79,8 @@ class _LibraryState extends State<Library> {
                       itemCount: playlists.length,
                       itemBuilder: (context, index) {
                         return Container(
-                          child: playlists[index] != "musics"
+                          child: playlists[index] != "musics" &&
+                                  playlists[index] != "favourites"
                               ? CustomPlayList(
                                   titleNew: playlists[index].toString(),
                                   leadingNew: Icons.queue_music,

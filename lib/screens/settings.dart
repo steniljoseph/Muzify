@@ -13,7 +13,6 @@ class Settings extends StatefulWidget {
 
 class _SettingsState extends State<Settings> {
   bool _toggled = false;
-  String test = 'ghhgjg';
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;

@@ -65,12 +65,6 @@ class _PlaylistScreenState extends State<PlaylistScreen> {
             ),
           )
         ],
-        // leading: IconButton(
-        //   icon: const Icon(Icons.arrow_back_ios),
-        //   onPressed: () {
-        //     Navigator.pop(context);
-        //   },
-        // ),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -125,53 +119,25 @@ class _PlaylistScreenState extends State<PlaylistScreen> {
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: GoogleFonts.poppins()),
-                            // trailing: PopupMenuButton(
-                            //   itemBuilder: (BuildContext context) => [
-                            //     PopupMenuItem(
-                            //       value: "1",
-                            //       child: Text(
-                            //         "Remove song",
-                            //         style: GoogleFonts.poppins(),
-                            //       ),
-                            //     ),
-                            //   ],
-                            //   onSelected: (value) {
-                            //     if (value == "1") {
-                            //       setState(() {});
-                            //       // playlistSongs.removeAt(index);
-                            //     }
-                            //   },
-                            //   // icon: const Icon(
-                            //   //   Icons.more_horiz,
-                            //   //   color: Colors.white,
-                            //   // ),
-                            // ),
-                            // onTap: () {
-                            //   for (var element in playlistSongs) {
-                            //     playPlaylist.add(
-                            //       Audio.file(
-                            //         element.uri!,
-                            //         metas: Metas(
-                            //           title: element.title,
-                            //           id: element.id.toString(),
-                            //           artist: element.artist,
-                            //         ),
-                            //       ),
-                            //     );
-                            //   }
-                            //   OpenPlayer(fullSongs: playPlaylist, index: index)
-                            //       .openAssetPlayer(
-                            //           index: index, songs: playPlaylist);
-                            //   Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //       builder: (context) => MusicPlayerScreen(
-                            //         fullSongs: playPlaylist,
-                            //         index: index,
-                            //       ),
-                            //     ),
-                            //   );
-                            // },
+                            trailing: PopupMenuButton(
+                              itemBuilder: (BuildContext context) => [
+                                PopupMenuItem(
+                                  value: "1",
+                                  child: Text(
+                                    "Remove song",
+                                    style: GoogleFonts.poppins(),
+                                  ),
+                                ),
+                              ],
+                              onSelected: (value) {
+                                if (value == "1") {
+                                  setState(() {
+                                    playlistSongs.removeAt(index);
+                                    box.put(widget.playlistName, playlistSongs);
+                                  });
+                                }
+                              },
+                            ),
                           ),
                           onTap: () {
                             for (var element in playlistSongs) {
@@ -206,111 +172,6 @@ class _PlaylistScreenState extends State<PlaylistScreen> {
           )
         ],
       ),
-      // bottomSheet: GestureDetector(
-      //   onTap: (() {
-      //     Navigator.push(
-      //       context,
-      //       MaterialPageRoute(
-      //         builder: (context) => MusicPlayerScreen(
-      //           index: 0,
-      //           fullSongs: widget.allSong,
-      //         ),
-      //       ),
-      //     );
-      //   }),
-      //   child: SizedBox(
-      //     height: 60,
-      //     child: assetAudioPlayer.builderCurrent(
-      //       builder: (BuildContext context, Playing? playing) {
-      //         final myAudio =
-      //             find(widget.allSong, playing!.audio.assetAudioPath);
-      //         return Row(
-      //           children: [
-      //             const SizedBox(
-      //               width: 10,
-      //             ),
-      //             SizedBox(
-      //               height: 50,
-      //               width: 50,
-      //               child: CircleAvatar(
-      //                 child: QueryArtworkWidget(
-      //                     id: int.parse(myAudio.metas.id!),
-      //                     type: ArtworkType.AUDIO,
-      //                     artworkBorder:
-      //                         const BorderRadius.all(Radius.circular(28)),
-      //                     artworkFit: BoxFit.cover,
-      //                     nullArtworkWidget:
-      //                         const Icon(FontAwesomeIcons.music)),
-      //               ),
-      //             ),
-      //             Expanded(
-      //               child: Padding(
-      //                 padding: const EdgeInsets.only(
-      //                   left: 12,
-      //                   top: 12,
-      //                 ),
-      //                 child: Column(
-      //                   crossAxisAlignment: CrossAxisAlignment.start,
-      //                   children: [
-      //                     Text(
-      //                       myAudio.metas.title!,
-      //                       maxLines: 1,
-      //                       overflow: TextOverflow.ellipsis,
-      //                       style: GoogleFonts.poppins(
-      //                           fontWeight: FontWeight.w500),
-      //                     ),
-      //                     const SizedBox(height: 4),
-      //                     Text(
-      //                       myAudio.metas.artist!,
-      //                       maxLines: 1,
-      //                       overflow: TextOverflow.ellipsis,
-      //                       style: GoogleFonts.poppins(fontSize: 12),
-      //                     ),
-      //                   ],
-      //                 ),
-      //               ),
-      //             ),
-      //             Row(
-      //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //               children: [
-      //                 IconButton(
-      //                   onPressed: () {
-      //                     assetAudioPlayer.previous();
-      //                   },
-      //                   icon: const Icon(FontAwesomeIcons.stepBackward),
-      //                 ),
-      //                 const SizedBox(width: 10),
-      //                 PlayerBuilder.isPlaying(
-      //                     player: assetAudioPlayer,
-      //                     builder: (context, isPlaying) {
-      //                       return IconButton(
-      //                         onPressed: () async {
-      //                           await assetAudioPlayer.playOrPause();
-      //                         },
-      //                         icon: Icon(
-      //                           isPlaying
-      //                               ? FontAwesomeIcons.pause
-      //                               : FontAwesomeIcons.play,
-      //                           size: 30,
-      //                         ),
-      //                       );
-      //                     }),
-      //                 const SizedBox(width: 10),
-      //                 IconButton(
-      //                   onPressed: () {
-      //                     assetAudioPlayer.next();
-      //                   },
-      //                   icon: const Icon(FontAwesomeIcons.stepForward),
-      //                 ),
-      //                 const SizedBox(width: 15),
-      //               ],
-      //             )
-      //           ],
-      //         );
-      //       },
-      //     ),
-      //   ),
-      // ),
     );
   }
 }

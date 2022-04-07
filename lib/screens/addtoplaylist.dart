@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -40,7 +42,7 @@ class AddtoPlayList extends StatelessWidget {
           ),
           ...playlists
               .map(
-                (audio) => audio != "musics"
+                (audio) => audio != "musics" && audio != 'favourites'
                     ? ListTile(
                         onTap: () async {
                           playlistSongs = box.get(audio);
@@ -50,7 +52,6 @@ class AddtoPlayList extends StatelessWidget {
                                   element.id.toString() ==
                                   song.metas.id.toString())
                               .toList();
-
                           if (existingSongs.isEmpty) {
                             final songs = box.get("musics") as List<LocalSongs>;
                             final temp = songs.firstWhere((element) =>
@@ -69,17 +70,21 @@ class AddtoPlayList extends StatelessWidget {
                             ));
                           } else {
                             Navigator.of(context).pop();
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text(
-                                'Existing Song',
-                                style: GoogleFonts.poppins(),
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  'Existing Song',
+                                  style: GoogleFonts.poppins(),
+                                ),
                               ),
-                            ));
+                            );
                           }
                         },
-                        leading: Icon(Icons.queue_music),
-                        title: Text(audio.toString(),
-                            style: GoogleFonts.poppins(fontSize: 22)),
+                        leading: const Icon(Icons.queue_music),
+                        title: Text(
+                          audio.toString(),
+                          style: GoogleFonts.poppins(fontSize: 22),
+                        ),
                       )
                     : Container(),
               )

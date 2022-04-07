@@ -38,7 +38,13 @@ class _SplashScreenState extends State<SplashScreen> {
     if (!permissionStatus) {
       await _audioQuery.permissionsRequest();
     }
-    allSongs = await _audioQuery.querySongs();
+    fetchedSongs = await _audioQuery.querySongs();
+
+    for (var element in fetchedSongs) {
+      if (element.fileExtension == "mp3") {
+        allSongs.add(element);
+      }
+    }
 
     mappedSongs = allSongs
         .map(
@@ -55,24 +61,22 @@ class _SplashScreenState extends State<SplashScreen> {
     await box.put("musics", mappedSongs);
     dbSongs = box.get("musics") as List<LocalSongs>;
 
-    dbSongs.forEach(
-      (element) {
-        fullSongs.add(
-          Audio.file(
-            element.uri.toString(),
-            metas: Metas(
-                title: element.title,
-                id: element.id.toString(),
-                artist: element.artist),
-          ),
-        );
-      },
-    );
+    for (var element in dbSongs) {
+      fullSongs.add(
+        Audio.file(
+          element.uri.toString(),
+          metas: Metas(
+              title: element.title,
+              id: element.id.toString(),
+              artist: element.artist),
+        ),
+      );
+    }
     setState(() {});
   }
 
   navigate() async {
-    await Future.delayed(Duration(seconds: 3));
+    await Future.delayed(const Duration(seconds: 3));
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
