@@ -1,6 +1,6 @@
-# muzify
+# Muzify
 
-A new Flutter project.
+Muzify is an ofline music player.
 
 ## Getting Started
 
