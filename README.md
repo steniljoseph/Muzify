@@ -1,4 +1,4 @@
-# music
+# muzify
 
 A new Flutter project.
 
