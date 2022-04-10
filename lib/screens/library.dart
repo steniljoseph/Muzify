@@ -2,11 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:music/database/dbsongs.dart';
 import 'package:music/widgets/customplaylist.dart';
-
 import '../widgets/createplaylistdialog.dart';
 import '../widgets/customlist.dart';
 import '../widgets/editplaylistname.dart';
@@ -34,9 +32,8 @@ class _LibraryState extends State<Library> {
         appBar: AppBar(
           automaticallyImplyLeading: false,
           centerTitle: true,
-          title: Text(
+          title: const Text(
             'Library',
-            style: GoogleFonts.poppins(),
           ),
         ),
         body: Container(
@@ -86,20 +83,22 @@ class _LibraryState extends State<Library> {
                                   leadingNew: Icons.queue_music,
                                   trailingNew: PopupMenuButton(
                                     itemBuilder: (context) => [
-                                      PopupMenuItem(
+                                      const PopupMenuItem(
                                         child: Text(
                                           'Remove Playlist',
-                                          style:
-                                              GoogleFonts.poppins(fontSize: 15),
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontFamily: 'Poppins'),
                                         ),
                                         value: "0",
                                       ),
-                                      PopupMenuItem(
+                                      const PopupMenuItem(
                                         value: "1",
                                         child: Text(
                                           "Rename Playlist",
-                                          style:
-                                              GoogleFonts.poppins(fontSize: 15),
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontFamily: 'Poppins'),
                                         ),
                                       ),
                                     ],

@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:music/database/dbsongs.dart';
-import 'package:music/screens/getstarted.dart';
 import 'package:music/screens/splash.dart';
 import 'package:music/themeprovider.dart';
-import 'screens/home.dart';
-import 'screens/nowplaying.dart';
 
-ThemeMode m = ThemeMode.system;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
@@ -29,7 +25,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      themeMode: m,
+      themeMode: ThemeMode.system,
       theme: MyThemes.lightTheme,
       darkTheme: MyThemes.darkTheme,
       title: 'Muzify',

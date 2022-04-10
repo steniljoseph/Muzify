@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class CustomListTile extends StatelessWidget {
   final String? titleNew;
@@ -19,14 +18,11 @@ class CustomListTile extends StatelessWidget {
     return ListTile(
       title: Text(
         titleNew!,
-        style: GoogleFonts.poppins(fontSize: 25),
+        style: const TextStyle(fontSize: 25, fontFamily: 'Poppins'),
       ),
       leading: Icon(
         leadingNew,
-        // size: 25,
-        // color: Colors.black,
       ),
-      // trailing: trailingNew,
       onTap: ontapNew,
     );
   }

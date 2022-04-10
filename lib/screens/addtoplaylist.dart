@@ -1,19 +1,16 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:music/database/dbsongs.dart';
 
 import '../widgets/createplaylistdialog.dart';
 
 class AddtoPlayList extends StatelessWidget {
   AddtoPlayList({Key? key, required this.song}) : super(key: key);
-  Audio song;
+  LocalSongs song;
 
   List playlists = [];
-  String? playlistName = '';
   List<dynamic>? playlistSongs = [];
 
   @override
@@ -33,10 +30,12 @@ class AddtoPlayList extends StatelessWidget {
                 builder: (context) => CreatePlaylist(),
               ),
               leading: const Icon(FontAwesomeIcons.plus),
-              title: Text(
+              title: const Text(
                 "Add a New Playlist",
-                style: GoogleFonts.poppins(
-                    fontSize: 25, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                    fontFamily: 'Poppins',
+                    fontSize: 25,
+                    fontWeight: FontWeight.w500),
               ),
             ),
           ),
@@ -49,14 +48,12 @@ class AddtoPlayList extends StatelessWidget {
                           List existingSongs = [];
                           existingSongs = playlistSongs!
                               .where((element) =>
-                                  element.id.toString() ==
-                                  song.metas.id.toString())
+                                  element.id.toString() == song.id.toString())
                               .toList();
                           if (existingSongs.isEmpty) {
                             final songs = box.get("musics") as List<LocalSongs>;
                             final temp = songs.firstWhere((element) =>
-                                element.id.toString() ==
-                                song.metas.id.toString());
+                                element.id.toString() == song.id.toString());
                             playlistSongs?.add(temp);
 
                             await box.put(audio, playlistSongs!);
@@ -64,8 +61,8 @@ class AddtoPlayList extends StatelessWidget {
                             Navigator.of(context).pop();
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                               content: Text(
-                                'Song Added',
-                                style: GoogleFonts.poppins(),
+                                song.title! + ' Added to Playlist',
+                                style: const TextStyle(fontFamily: 'Poppins'),
                               ),
                             ));
                           } else {
@@ -73,8 +70,8 @@ class AddtoPlayList extends StatelessWidget {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text(
-                                  'Existing Song',
-                                  style: GoogleFonts.poppins(),
+                                  song.title! + ' is already in Playlist.',
+                                  style: const TextStyle(fontFamily: 'Poppins'),
                                 ),
                               ),
                             );
@@ -83,7 +80,10 @@ class AddtoPlayList extends StatelessWidget {
                         leading: const Icon(Icons.queue_music),
                         title: Text(
                           audio.toString(),
-                          style: GoogleFonts.poppins(fontSize: 22),
+                          style: const TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 22,
+                          ),
                         ),
                       )
                     : Container(),

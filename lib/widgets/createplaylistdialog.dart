@@ -1,5 +1,6 @@
+// ignore_for_file: prefer_const_constructors_in_immutables
+
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:music/database/dbsongs.dart';
 
 class CreatePlaylist extends StatefulWidget {
@@ -12,9 +13,9 @@ class CreatePlaylist extends StatefulWidget {
 class _CreatePlaylistState extends State<CreatePlaylist> {
   List<LocalSongs> playlists = [];
 
-  final _box = MusicBox.getInstance();
+  final box = MusicBox.getInstance();
 
-  String? _title;
+  String? title;
 
   final formkey = GlobalKey<FormState>();
 
@@ -32,18 +33,16 @@ class _CreatePlaylistState extends State<CreatePlaylist> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(
+            const Padding(
+              padding: EdgeInsets.only(
                 right: 20,
                 left: 20,
                 top: 20,
               ),
               child: Text(
                 "Add a name to playlist.",
-                style: GoogleFonts.poppins(
-                  color: Colors.white,
-                  fontSize: 18,
-                ),
+                style: TextStyle(
+                    color: Colors.white, fontSize: 18, fontFamily: 'Poppins'),
               ),
             ),
             Padding(
@@ -62,17 +61,23 @@ class _CreatePlaylistState extends State<CreatePlaylist> {
                       borderSide: BorderSide(color: Colors.white),
                     ),
                   ),
-                  style: GoogleFonts.poppins(fontSize: 22, color: Colors.white),
+                  style: const TextStyle(
+                    fontSize: 22,
+                    color: Colors.white,
+                    fontFamily: 'Poppins',
+                  ),
                   onChanged: (value) {
-                    _title = value;
+                    title = value.trim();
                   },
                   validator: (value) {
-                    List keys = _box.keys.toList();
-                    if (value == "") {
-                      return "Name required";
+                    List keys = box.keys.toList();
+                    if (value!.trim() == "") {
+                      return "name required";
                     }
-                    if (keys.where((element) => element == value).isNotEmpty) {
-                      return "This name already exits";
+                    if (keys
+                        .where((element) => element == value.trim())
+                        .isNotEmpty) {
+                      return "this name already exits";
                     }
                     return null;
                   },
@@ -92,13 +97,13 @@ class _CreatePlaylistState extends State<CreatePlaylist> {
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      child: Center(
+                      child: const Center(
                         child: Text(
                           "Cancel",
-                          style: GoogleFonts.rubik(
-                            color: Colors.white,
-                            fontSize: 15,
-                          ),
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                              fontFamily: 'Poppins'),
                         ),
                       ),
                     ),
@@ -114,17 +119,18 @@ class _CreatePlaylistState extends State<CreatePlaylist> {
                     child: TextButton(
                       onPressed: () {
                         if (formkey.currentState!.validate()) {
-                          _box.put(_title, playlists);
+                          box.put(title, playlists);
                           Navigator.pop(context);
                           setState(() {});
                         }
                       },
-                      child: Center(
+                      child: const Center(
                         child: Text(
                           "Create",
-                          style: GoogleFonts.rubik(
+                          style: TextStyle(
                             color: Colors.white,
                             fontSize: 15,
+                            fontFamily: 'Poppins',
                           ),
                         ),
                       ),

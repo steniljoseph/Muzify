@@ -3,13 +3,11 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:music/database/dbsongs.dart';
 import 'package:music/screens/nowplaying.dart';
 import 'package:music/widgets/songsheet.dart';
 import 'package:on_audio_query/on_audio_query.dart';
-
 import '../classes/openaudio.dart';
 
 class PlaylistScreen extends StatefulWidget {
@@ -25,8 +23,6 @@ class PlaylistScreen extends StatefulWidget {
 }
 
 class _PlaylistScreenState extends State<PlaylistScreen> {
-  // final AssetsAudioPlayer assetAudioPlayer = AssetsAudioPlayer.withId("0");
-  // final audioQuery = OnAudioQuery();
   final box = MusicBox.getInstance();
   List<LocalSongs>? dbSongs = [];
   List<LocalSongs>? playlistSongs = [];
@@ -39,7 +35,6 @@ class _PlaylistScreenState extends State<PlaylistScreen> {
         centerTitle: true,
         title: Text(
           widget.playlistName,
-          style: GoogleFonts.poppins(),
         ),
         // ignore: prefer_const_literals_to_create_immutables
         actions: [
@@ -75,11 +70,12 @@ class _PlaylistScreenState extends State<PlaylistScreen> {
               builder: (context, value, child) {
                 var playlistSongs = box.get(widget.playlistName)!;
                 return playlistSongs.isEmpty
-                    ? SizedBox(
+                    ? const SizedBox(
                         child: Center(
                           child: Text(
                             "Add Some Songs!",
-                            style: GoogleFonts.poppins(fontSize: 25),
+                            style:
+                                TextStyle(fontFamily: 'Poppins', fontSize: 25),
                           ),
                         ),
                       )
@@ -113,19 +109,25 @@ class _PlaylistScreenState extends State<PlaylistScreen> {
                               playlistSongs[index].title!,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: GoogleFonts.poppins(),
+                              style: const TextStyle(
+                                fontFamily: 'Poppins',
+                              ),
                             ),
-                            subtitle: Text(playlistSongs[index].artist!,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: GoogleFonts.poppins()),
+                            subtitle: Text(
+                              playlistSongs[index].artist!,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(fontFamily: 'Poppins'),
+                            ),
                             trailing: PopupMenuButton(
                               itemBuilder: (BuildContext context) => [
-                                PopupMenuItem(
+                                const PopupMenuItem(
                                   value: "1",
                                   child: Text(
                                     "Remove song",
-                                    style: GoogleFonts.poppins(),
+                                    style: TextStyle(
+                                      fontFamily: 'Poppins',
+                                    ),
                                   ),
                                 ),
                               ],

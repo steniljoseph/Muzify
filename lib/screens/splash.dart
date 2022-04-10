@@ -1,10 +1,8 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:music/screens/getstarted.dart';
 import 'package:music/screens/home.dart';
 import 'package:on_audio_query/on_audio_query.dart';
-
 import '../database/dbsongs.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -27,7 +25,6 @@ class _SplashScreenState extends State<SplashScreen> {
   final _audioQuery = OnAudioQuery();
 
   List<Audio> fullSongs = [];
-  // String playlistName = '';
   List<LocalSongs> mappedSongs = [];
   List<LocalSongs> dbSongs = [];
   List<SongModel> fetchedSongs = [];
@@ -82,7 +79,6 @@ class _SplashScreenState extends State<SplashScreen> {
       MaterialPageRoute(
         builder: (context) => HomePage(
           allSong: fullSongs,
-          // playlistName: playlistName,
         ),
       ),
     );

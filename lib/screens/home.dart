@@ -1,17 +1,14 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:music/database/dbsongs.dart';
 import 'package:music/screens/library.dart';
 import 'package:music/screens/musiclist.dart';
 import 'package:music/screens/nowplaying.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:swipe_to/swipe_to.dart';
-
-import '../main.dart';
 import 'search.dart';
-import 'settings.dart';
 
 class HomePage extends StatefulWidget {
   List<Audio> allSong;
@@ -86,13 +83,13 @@ class _HomePageState extends State<HomePage> {
                     width: 50,
                     child: CircleAvatar(
                       child: QueryArtworkWidget(
-                          id: int.parse(myAudio.metas.id!),
-                          type: ArtworkType.AUDIO,
-                          artworkBorder:
-                              const BorderRadius.all(Radius.circular(28)),
-                          artworkFit: BoxFit.cover,
-                          nullArtworkWidget:
-                              const Icon(FontAwesomeIcons.music)),
+                        id: int.parse(myAudio.metas.id!),
+                        type: ArtworkType.AUDIO,
+                        artworkBorder:
+                            const BorderRadius.all(Radius.circular(28)),
+                        artworkFit: BoxFit.cover,
+                        nullArtworkWidget: const Icon(FontAwesomeIcons.music),
+                      ),
                     ),
                   ),
                   Expanded(
@@ -116,7 +113,8 @@ class _HomePageState extends State<HomePage> {
                               myAudio.metas.title!,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: GoogleFonts.poppins(
+                              style: const TextStyle(
+                                  fontFamily: 'Poppins',
                                   fontWeight: FontWeight.w500),
                             ),
                             const SizedBox(height: 4),
@@ -124,7 +122,8 @@ class _HomePageState extends State<HomePage> {
                               myAudio.metas.artist!,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: GoogleFonts.poppins(fontSize: 12),
+                              style: const TextStyle(
+                                  fontSize: 12, fontFamily: 'Poppins'),
                             ),
                           ],
                         ),
@@ -140,7 +139,6 @@ class _HomePageState extends State<HomePage> {
                         },
                         icon: const Icon(FontAwesomeIcons.stepBackward),
                       ),
-                      const SizedBox(width: 10),
                       PlayerBuilder.isPlaying(
                           player: assetAudioPlayer,
                           builder: (context, isPlaying) {
@@ -152,11 +150,9 @@ class _HomePageState extends State<HomePage> {
                                 isPlaying
                                     ? FontAwesomeIcons.pause
                                     : FontAwesomeIcons.play,
-                                size: 30,
                               ),
                             );
                           }),
-                      const SizedBox(width: 10),
                       GestureDetector(
                         child: IconButton(
                           onPressed: () {
@@ -165,7 +161,6 @@ class _HomePageState extends State<HomePage> {
                           icon: const Icon(FontAwesomeIcons.stepForward),
                         ),
                       ),
-                      const SizedBox(width: 15),
                     ],
                   )
                 ],

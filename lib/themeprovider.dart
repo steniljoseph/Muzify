@@ -9,6 +9,7 @@ class MyThemes {
           statusBarColor: Colors.black,
           statusBarBrightness: Brightness.dark),
       titleTextStyle: TextStyle(
+        fontFamily: 'Poppins',
         color: Colors.white,
         fontWeight: FontWeight.w600,
         fontSize: 30,

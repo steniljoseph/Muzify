@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:music/database/dbsongs.dart';
 
 class EditPlaylist extends StatelessWidget {
@@ -19,17 +18,18 @@ class EditPlaylist extends StatelessWidget {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(
+          const Padding(
+            padding: EdgeInsets.only(
               right: 20,
               left: 20,
               top: 20,
             ),
             child: Text(
               "Edit your playlist name.",
-              style: GoogleFonts.poppins(
+              style: TextStyle(
                 color: Colors.white,
                 fontSize: 18,
+                fontFamily: 'Poppins',
               ),
             ),
           ),
@@ -54,15 +54,17 @@ class EditPlaylist extends StatelessWidget {
                   fontSize: 20,
                 ),
                 onChanged: (value) {
-                  _title = value;
+                  _title = value.trim();
                 },
                 validator: (value) {
                   List keys = _box.keys.toList();
-                  if (value == "") {
-                    return "Name Required";
+                  if (value!.trim() == "") {
+                    return "name Required";
                   }
-                  if (keys.where((element) => element == value).isNotEmpty) {
-                    return "This name already exits";
+                  if (keys
+                      .where((element) => element == value.trim())
+                      .isNotEmpty) {
+                    return "this name already exits";
                   }
                   return null;
                 },
@@ -82,12 +84,13 @@ class EditPlaylist extends StatelessWidget {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: Center(
+                    child: const Center(
                       child: Text(
                         "Cancel",
-                        style: GoogleFonts.rubik(
+                        style: TextStyle(
                           color: Colors.white,
                           fontSize: 15,
+                          fontFamily: 'Poppins',
                         ),
                       ),
                     ),
@@ -110,12 +113,13 @@ class EditPlaylist extends StatelessWidget {
                         Navigator.pop(context);
                       }
                     },
-                    child: Center(
+                    child: const Center(
                       child: Text(
                         "Save",
-                        style: GoogleFonts.rubik(
+                        style: TextStyle(
                           color: Colors.white,
                           fontSize: 15,
+                          fontFamily: 'Poppins',
                         ),
                       ),
                     ),

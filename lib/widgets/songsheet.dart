@@ -1,7 +1,6 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:music/database/dbsongs.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
@@ -62,13 +61,13 @@ class _SongSheetState extends State<SongSheet> {
               dbSongs[index].title!,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: GoogleFonts.poppins(),
+              style: const TextStyle(fontFamily: 'Poppins'),
             ),
             subtitle: Text(
               dbSongs[index].artist!,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: GoogleFonts.poppins(),
+              style: const TextStyle(fontFamily: 'Poppins'),
             ),
             trailing: playlistSongs
                     .where((element) =>

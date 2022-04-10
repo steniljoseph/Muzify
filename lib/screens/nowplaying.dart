@@ -1,16 +1,13 @@
-// ignore_for_file: sized_box_for_whitespace
+// ignore_for_file: sized_box_for_whitespace, must_be_immutable
 
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:music/database/dbsongs.dart';
-import 'package:music/screens/addtoplaylist.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:marquee/marquee.dart';
 
-// ignore: must_be_immutable
 class MusicPlayerScreen extends StatefulWidget {
   int index;
   List<Audio> fullSongs = [];
@@ -22,12 +19,9 @@ class MusicPlayerScreen extends StatefulWidget {
 }
 
 class MusicPlayerScreenState extends State<MusicPlayerScreen> {
-  // double minimumValue = 0, maximumValue = 0, currentValue = 0;
-  // String currentTime = '', endTime = '';
-
   bool isPlaying = false;
   bool isLooping = false;
-  // bool _fav = false;
+  bool isShuffle = false;
   LocalSongs? music;
 
   final AssetsAudioPlayer player = AssetsAudioPlayer.withId("0");
@@ -36,7 +30,6 @@ class MusicPlayerScreenState extends State<MusicPlayerScreen> {
     return source.firstWhere((element) => element.path == fromPath);
   }
 
-  // late TextEditingController controller;
   final box = MusicBox.getInstance();
   List<LocalSongs> dbSongs = [];
   List<dynamic>? likedSongs = [];
@@ -63,46 +56,10 @@ class MusicPlayerScreenState extends State<MusicPlayerScreen> {
             },
             icon: const Icon(FontAwesomeIcons.chevronDown),
           ),
-          title: Text(
+          title: const Text(
             'Now Playing',
-            style: GoogleFonts.poppins(),
           ),
           centerTitle: true,
-          // actions: [
-          //   PopupMenuButton(
-          //     itemBuilder: (context) => [
-          //       PopupMenuItem(
-          // value: '0',
-          // child: Text(
-          //   'Add to Playlist',
-          //   style: GoogleFonts.poppins(fontSize: 15),
-          // ),
-          //       ),
-          //       PopupMenuItem(
-          //         onTap: (() {}),
-          //         child: Text(
-          //           'Add to Favourites',
-          //           style: GoogleFonts.poppins(fontSize: 15),
-          //         ),
-          //       ),
-          //     ],
-          //     onSelected: (value) {
-          //       if (value == '0') {
-          //         showModalBottomSheet(
-          //           shape: const RoundedRectangleBorder(
-          //             borderRadius: BorderRadius.vertical(
-          //               top: Radius.circular(20),
-          //             ),
-          //           ),
-          //           context: context,
-          //           builder: (context) => AddtoPlayList(
-          //             song: widget.,
-          //           ),
-          //         );
-          //       }
-          //     },
-          //   ),
-          // ],
         ),
         body: player.builderCurrent(
           builder: (context, Playing? playing) {
@@ -155,21 +112,32 @@ class MusicPlayerScreenState extends State<MusicPlayerScreen> {
                       ),
                     ),
                   ),
-
-                  // buildAnimatedText(myAudio.metas.title!),
-
-                  Text(
-                    myAudio.metas.title!,
-                    overflow: TextOverflow.ellipsis,
-                    style: GoogleFonts.poppins(fontSize: 25),
+                  SizedBox(
+                    height: 40,
+                    width: 300,
+                    child: Marquee(
+                      text: myAudio.metas.title!,
+                      style: const TextStyle(
+                        fontSize: 25,
+                        fontFamily: 'Poppins',
+                      ),
+                      scrollAxis: Axis.horizontal,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      blankSpace: 20.0,
+                      velocity: 50.0,
+                      pauseAfterRound: const Duration(seconds: 1),
+                      startPadding: 5.0,
+                      accelerationDuration: const Duration(seconds: 1),
+                      accelerationCurve: Curves.linear,
+                      decelerationDuration: const Duration(milliseconds: 500),
+                      decelerationCurve: Curves.easeOut,
+                    ),
                   ),
-
                   Text(
                     myAudio.metas.artist!,
                     overflow: TextOverflow.ellipsis,
-                    style: GoogleFonts.poppins(),
+                    style: const TextStyle(fontFamily: 'Poppins'),
                   ),
-
                   const SizedBox(
                     height: 20,
                   ),
@@ -184,12 +152,25 @@ class MusicPlayerScreenState extends State<MusicPlayerScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      IconButton(
-                        onPressed: () {
-                          player.toggleShuffle();
-                        },
-                        icon: const Icon(Icons.shuffle),
-                      ),
+                      !isShuffle
+                          ? IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  isShuffle = true;
+                                  player.toggleShuffle();
+                                });
+                              },
+                              icon: const Icon(Icons.shuffle),
+                            )
+                          : IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  isShuffle = false;
+                                  player.setLoopMode(LoopMode.playlist);
+                                });
+                              },
+                              icon: const Icon(Icons.cached),
+                            ),
                       likedSongs!
                               .where((element) =>
                                   element.id.toString() ==
@@ -296,7 +277,8 @@ class MusicPlayerScreenState extends State<MusicPlayerScreen> {
             // progressBarColor: Colors.white,
             baseBarColor: Colors.grey,
             // thumbColor: Colors.white,
-            timeLabelTextStyle: GoogleFonts.poppins(
+            timeLabelTextStyle: const TextStyle(
+              fontFamily: 'Poppins',
               color: Colors.grey,
             ),
             onSeek: (to) {
@@ -307,9 +289,4 @@ class MusicPlayerScreenState extends State<MusicPlayerScreen> {
       },
     );
   }
-
-  Widget buildAnimatedText(String text) => Marquee(
-        text: text,
-        style: GoogleFonts.poppins(fontSize: 25),
-      );
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class CustomPlayList extends StatelessWidget {
   final String? titleNew;
@@ -19,7 +18,7 @@ class CustomPlayList extends StatelessWidget {
     return ListTile(
       title: Text(
         titleNew!,
-        style: GoogleFonts.poppins(fontSize: 25),
+        style: const TextStyle(fontSize: 25, fontFamily: 'Poppins'),
       ),
       leading: Icon(
         leadingNew,

@@ -1,15 +1,9 @@
-import 'dart:io';
-
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:music/database/dbsongs.dart';
 import 'package:on_audio_query/on_audio_query.dart';
-
 import '../classes/openaudio.dart';
-import '../widgets/custommusic.dart';
-import 'nowplaying.dart';
 
 class SearchScreen extends StatefulWidget {
   List<Audio> fullSongs = [];
@@ -53,25 +47,33 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+
     List<Audio> searchTitle = allSongs.where((element) {
       return element.metas.title!.toLowerCase().startsWith(
             search.toLowerCase(),
           );
     }).toList();
+
     List<Audio> searchArtist = allSongs.where((element) {
       return element.metas.artist!.toLowerCase().startsWith(
             search.toLowerCase(),
           );
     }).toList();
-    List<Audio> searchResult = searchTitle + searchArtist;
+
+    List<Audio> searchResult = [];
+    if (searchTitle.isNotEmpty) {
+      searchResult = searchTitle;
+    } else {
+      searchResult = searchArtist;
+    }
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
           automaticallyImplyLeading: false,
-          title: Text(
+          title: const Text(
             'Search',
-            style: GoogleFonts.poppins(),
           ),
         ),
         // ignore: sized_box_for_whitespace
@@ -113,12 +115,13 @@ class _SearchScreenState extends State<SearchScreen> {
                     suffixIcon: Icon(FontAwesomeIcons.search),
                     hintText: ' Search a song',
                     filled: true,
-                    hintStyle: TextStyle(color: Colors.grey),
+                    hintStyle:
+                        TextStyle(color: Colors.grey, fontFamily: 'Poppins'),
                   ),
                   onChanged: (value) {
                     setState(
                       () {
-                        search = value;
+                        search = value.trim();
                       },
                     );
                   },
@@ -145,14 +148,6 @@ class _SearchScreenState extends State<SearchScreen> {
                                             .openAssetPlayer(
                                                 index: index,
                                                 songs: searchResult);
-                                        // Navigator.of(context).push(
-                                        //     MaterialPageRoute(
-                                        //         builder: (context) =>
-                                        //             playingsong(
-                                        //               index: index,
-                                        //               audiosongs:
-                                        //                   widget.audiosongs,
-                                        //             )));
                                       },
                                       child: ListTile(
                                         leading: SizedBox(
@@ -184,16 +179,20 @@ class _SearchScreenState extends State<SearchScreen> {
                                           searchResult[index].metas.title!,
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
-                                          style: GoogleFonts.poppins(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w400),
+                                          style: const TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w400,
+                                            fontFamily: 'Poppins',
+                                          ),
                                         ),
                                         subtitle: Text(
                                           searchResult[index].metas.artist!,
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
-                                          style:
-                                              GoogleFonts.poppins(fontSize: 14),
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                            fontFamily: 'Poppins',
+                                          ),
                                         ),
                                       ),
                                     );
@@ -204,11 +203,14 @@ class _SearchScreenState extends State<SearchScreen> {
                             },
                           ),
                         )
-                      : Padding(
+                      : const Padding(
                           padding: EdgeInsets.all(30),
                           child: Text(
                             "No Result Found",
-                            style: GoogleFonts.poppins(fontSize: 20),
+                            style: TextStyle(
+                              fontFamily: 'Poppins',
+                              fontSize: 20,
+                            ),
                           ),
                         )
                   : const SizedBox(),
