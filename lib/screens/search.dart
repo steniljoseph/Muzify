@@ -2,6 +2,7 @@ import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:music/database/dbsongs.dart';
+import 'package:music/themeprovider.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import '../classes/openaudio.dart';
 
@@ -76,47 +77,28 @@ class _SearchScreenState extends State<SearchScreen> {
             'Search',
           ),
         ),
-        // ignore: sized_box_for_whitespace
-        body: Container(
+        body: SizedBox(
           height: height,
           width: width,
           child: Column(
             children: [
-              // const SizedBox(
-              //   height: 5,
-              // ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: [
-              //     Text(
-              //       'Search',
-              //       style: GoogleFonts.poppins(
-              //           fontSize: 30, fontWeight: FontWeight.w600),
-              //     ),
-              //   ],
-              // ),
-              // const SizedBox(
-              //   height: 5,
-              // ),
               Container(
                 alignment: Alignment.centerLeft,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
-                  // boxShadow: const [
-                  //   BoxShadow(color: Color.fromARGB(66, 226, 213, 213))
-                  // ],
+                  // boxShadow: const [BoxShadow(color: Colors.grey)],
                 ),
                 height: MediaQuery.of(context).size.height * .07,
                 width: MediaQuery.of(context).size.width * .9,
                 child: TextField(
                   decoration: const InputDecoration(
                     border: InputBorder.none,
-                    contentPadding: EdgeInsets.only(top: 14, right: 10),
+                    contentPadding:
+                        EdgeInsets.only(top: 14, right: 10, left: 10),
                     suffixIcon: Icon(FontAwesomeIcons.search),
                     hintText: ' Search a song',
                     filled: true,
-                    hintStyle:
-                        TextStyle(color: Colors.grey, fontFamily: 'Poppins'),
+                    hintStyle: TextStyle(fontFamily: 'Poppins'),
                   ),
                   onChanged: (value) {
                     setState(

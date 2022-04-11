@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 class MyThemes {
   static final darkTheme = ThemeData(
+    
     appBarTheme: const AppBarTheme(
       systemOverlayStyle: SystemUiOverlayStyle(
           systemNavigationBarColor: Colors.black,
@@ -18,7 +19,7 @@ class MyThemes {
       elevation: 0.0,
       iconTheme: IconThemeData(color: Colors.white),
     ),
-    snackBarTheme: SnackBarThemeData(backgroundColor: Colors.white),
+    snackBarTheme: const SnackBarThemeData(backgroundColor: Colors.white),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         primary: Colors.white,
