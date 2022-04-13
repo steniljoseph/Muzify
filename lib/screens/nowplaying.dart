@@ -75,10 +75,13 @@ class MusicPlayerScreenState extends State<MusicPlayerScreen> {
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Container(
                     margin: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 50),
+                      horizontal: 20,
+                      vertical: 50,
+                    ),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       boxShadow: const [
@@ -146,79 +149,94 @@ class MusicPlayerScreenState extends State<MusicPlayerScreen> {
                     margin: const EdgeInsets.only(left: 10, right: 10),
                     child: seekBar(context),
                   ),
-                  const SizedBox(
-                    height: 40,
-                  ),
+                  // const SizedBox(
+                  //   height: 10,
+                  // ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      !isShuffle
-                          ? IconButton(
-                              onPressed: () {
-                                setState(() {
-                                  isShuffle = true;
-                                  player.toggleShuffle();
-                                });
-                              },
-                              icon: const Icon(Icons.shuffle),
-                            )
-                          : IconButton(
-                              onPressed: () {
-                                setState(() {
-                                  isShuffle = false;
-                                  player.setLoopMode(LoopMode.playlist);
-                                });
-                              },
-                              icon: const Icon(Icons.cached),
-                            ),
-                      likedSongs!
-                              .where((element) =>
-                                  element.id.toString() ==
-                                  currentSong.id.toString())
-                              .isEmpty
-                          ? IconButton(
-                              onPressed: () async {
-                                likedSongs?.add(currentSong);
-                                box.put("favourites", likedSongs!);
-                                likedSongs = box.get("favourites");
-                                setState(() {});
-                              },
-                              icon: const Icon(Icons.favorite_border),
-                            )
-                          : IconButton(
-                              onPressed: () async {
-                                setState(() {
-                                  likedSongs?.removeWhere((elemet) =>
-                                      elemet.id.toString() ==
-                                      currentSong.id.toString());
-                                  box.put("favourites", likedSongs!);
-                                });
-                              },
-                              icon: const Icon(Icons.favorite),
-                            ),
-                      !isLooping
-                          ? IconButton(
-                              onPressed: () {
-                                setState(() {
-                                  isLooping = true;
-                                  player.setLoopMode(LoopMode.single);
-                                });
-                              },
-                              icon: const Icon(Icons.repeat),
-                            )
-                          : IconButton(
-                              onPressed: () {
-                                setState(() {
-                                  isLooping = false;
-                                  player.setLoopMode(LoopMode.playlist);
-                                });
-                              },
-                              icon: const Icon(Icons.repeat_one),
-                            ),
+                      StatefulBuilder(
+                        builder: (BuildContext context,
+                            void Function(void Function()) setState) {
+                          return !isShuffle
+                              ? IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      isShuffle = true;
+                                      player.toggleShuffle();
+                                    });
+                                  },
+                                  icon: const Icon(Icons.shuffle),
+                                )
+                              : IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      isShuffle = false;
+                                      player.setLoopMode(LoopMode.playlist);
+                                    });
+                                  },
+                                  icon: const Icon(Icons.cached),
+                                );
+                        },
+                      ),
+                      StatefulBuilder(
+                        builder: (BuildContext context,
+                            void Function(void Function()) setState) {
+                          return likedSongs!
+                                  .where((element) =>
+                                      element.id.toString() ==
+                                      currentSong.id.toString())
+                                  .isEmpty
+                              ? IconButton(
+                                  onPressed: () async {
+                                    likedSongs?.add(currentSong);
+                                    box.put("favourites", likedSongs!);
+                                    likedSongs = box.get("favourites");
+                                    setState(() {});
+                                  },
+                                  icon: const Icon(Icons.favorite_border),
+                                )
+                              : IconButton(
+                                  onPressed: () async {
+                                    setState(() {
+                                      likedSongs?.removeWhere((elemet) =>
+                                          elemet.id.toString() ==
+                                          currentSong.id.toString());
+                                      box.put("favourites", likedSongs!);
+                                    });
+                                  },
+                                  icon: const Icon(Icons.favorite),
+                                );
+                        },
+                      ),
+                      StatefulBuilder(
+                        builder: (BuildContext context,
+                            void Function(void Function()) setState) {
+                          return !isLooping
+                              ? IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      isLooping = true;
+                                      player.setLoopMode(LoopMode.single);
+                                    });
+                                  },
+                                  icon: const Icon(Icons.repeat),
+                                )
+                              : IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      isLooping = false;
+                                      player.setLoopMode(LoopMode.playlist);
+                                    });
+                                  },
+                                  icon: const Icon(Icons.repeat_one),
+                                );
+                        },
+                      ),
                     ],
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 10,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -255,6 +273,9 @@ class MusicPlayerScreenState extends State<MusicPlayerScreen> {
                       ),
                     ],
                   ),
+                  SizedBox(
+                    height: 10,
+                  )
                 ],
               ),
             );
@@ -274,9 +295,9 @@ class MusicPlayerScreenState extends State<MusicPlayerScreen> {
           child: ProgressBar(
             progress: currentPos,
             total: total,
-            // progressBarColor: Colors.white,
+            // progressBarColor: Colors.grey,
             baseBarColor: Colors.grey,
-            // thumbColor: Colors.white,
+            // thumbColor: Colors.grey,
             timeLabelTextStyle: const TextStyle(
               fontFamily: 'Poppins',
               color: Colors.grey,

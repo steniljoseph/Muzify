@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 
 class MyThemes {
   static final darkTheme = ThemeData(
-    
     appBarTheme: const AppBarTheme(
       systemOverlayStyle: SystemUiOverlayStyle(
           systemNavigationBarColor: Colors.black,
@@ -57,12 +56,28 @@ class MyThemes {
   );
 
   static final lightTheme = ThemeData(
+    // appBarTheme: const AppBarTheme(
+    //   systemOverlayStyle: SystemUiOverlayStyle(
+    //     statusBarColor: Colors.white,
+    //     statusBarBrightness: Brightness.light,
+    //     systemNavigationBarColor: Colors.white,
+    //   ),
+    //   titleTextStyle: TextStyle(
+    //     color: Colors.black,
+    //     fontWeight: FontWeight.w600,
+    //     fontSize: 30,
+    //   ),
+    //   backgroundColor: Colors.white,
+    //   elevation: 0.0,
+    //   iconTheme: IconThemeData(color: Colors.black),
+    // ),
     appBarTheme: const AppBarTheme(
       systemOverlayStyle: SystemUiOverlayStyle(
+          systemNavigationBarColor: Colors.white,
           statusBarColor: Colors.white,
-          statusBarBrightness: Brightness.light,
-          systemNavigationBarColor: Colors.white),
+          statusBarBrightness: Brightness.dark),
       titleTextStyle: TextStyle(
+        fontFamily: 'Poppins',
         color: Colors.black,
         fontWeight: FontWeight.w600,
         fontSize: 30,
@@ -72,7 +87,7 @@ class MyThemes {
       iconTheme: IconThemeData(color: Colors.black),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(primary: Colors.black),
+      style: ElevatedButton.styleFrom(primary: Colors.white),
     ),
     listTileTheme: const ListTileThemeData(
       iconColor: Colors.black,

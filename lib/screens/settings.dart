@@ -97,7 +97,8 @@ class _SettingsState extends State<Settings> {
                     leadingNew: FontAwesomeIcons.shareAlt,
                     ontapNew: () {
                       Share.share(
-                          'Hey Checkout this Cool Offline Music Player by Sneha Stenil');
+                        'Hey Checkout this Cool Offline Music Player.',
+                      );
                     },
                   ),
                   CustomListTile(

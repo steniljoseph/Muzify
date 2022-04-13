@@ -46,7 +46,7 @@ class _MusicListState extends State<MusicList> {
         appBar: AppBar(
           automaticallyImplyLeading: false,
           title: const Text(
-            'Listen to your music',
+            'All Songs',
           ),
           actions: [
             Wrap(

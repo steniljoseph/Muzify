@@ -2,7 +2,6 @@ import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:music/database/dbsongs.dart';
-import 'package:music/themeprovider.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import '../classes/openaudio.dart';
 
@@ -77,16 +76,35 @@ class _SearchScreenState extends State<SearchScreen> {
             'Search',
           ),
         ),
-        body: SizedBox(
+        // ignore: sized_box_for_whitespace
+        body: Container(
           height: height,
           width: width,
           child: Column(
             children: [
+              // const SizedBox(
+              //   height: 5,
+              // ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: [
+              //     Text(
+              //       'Search',
+              //       style: GoogleFonts.poppins(
+              //           fontSize: 30, fontWeight: FontWeight.w600),
+              //     ),
+              //   ],
+              // ),
+              // const SizedBox(
+              //   height: 5,
+              // ),
               Container(
                 alignment: Alignment.centerLeft,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
-                  // boxShadow: const [BoxShadow(color: Colors.grey)],
+                  // boxShadow: const [
+                  //   BoxShadow(color: Color.fromARGB(66, 226, 213, 213))
+                  // ],
                 ),
                 height: MediaQuery.of(context).size.height * .07,
                 width: MediaQuery.of(context).size.width * .9,
@@ -98,7 +116,8 @@ class _SearchScreenState extends State<SearchScreen> {
                     suffixIcon: Icon(FontAwesomeIcons.search),
                     hintText: ' Search a song',
                     filled: true,
-                    hintStyle: TextStyle(fontFamily: 'Poppins'),
+                    hintStyle:
+                        TextStyle(color: Colors.grey, fontFamily: 'Poppins'),
                   ),
                   onChanged: (value) {
                     setState(
